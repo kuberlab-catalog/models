@@ -10,6 +10,7 @@ WORKDIR /research
 
 RUN git clone https://github.com/cocodataset/cocoapi.git && \
  cd cocoapi/PythonAPI && make && make install && cd /research && \
+ protoc object_detection/protos/*.proto --python_out=. && \
  python setup.py sdist && \
  (cd slim && python setup.py sdist) && \
  pip install dist/* && pip install slim/dist/* && \
