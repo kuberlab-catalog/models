@@ -336,7 +336,7 @@ def _export_inference_graph(input_type,
     tf.gfile.MakeDirs(output_directory)
     frozen_graph_path = os.path.join(output_directory,
                                      'frozen_inference_graph.pb')
-    saved_model_path = os.path.join(output_directory, 'saved_model')
+    saved_model_path = os.path.join(output_directory, 'saved_model', '1')
     model_path = os.path.join(output_directory, 'model.ckpt')
 
     if input_type not in input_placeholder_fn_map:
