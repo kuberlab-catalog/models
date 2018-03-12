@@ -1,9 +1,13 @@
 FROM tensorflow/tensorflow:nightly
 
-RUN apt-get update && apt-get install protobuf-compiler python-pil python-lxml python-tk build-essential -y
-RUN pip install jupyter matplotlib pillow lxml cython
-
-RUN apt-get install git -y
+RUN apt-get update && apt-get install -y \
+  git \
+  protobuf-compiler \
+  python-pil \
+  python-lxml \
+  python-tk \
+  build-essential && \
+  pip install jupyter matplotlib pillow lxml cython
 
 COPY ./research /research
 WORKDIR /research
