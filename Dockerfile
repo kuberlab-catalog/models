@@ -19,3 +19,15 @@ RUN git clone https://github.com/cocodataset/cocoapi.git && \
  (cd slim && python setup.py sdist) && \
  pip install dist/* && pip install slim/dist/* && \
  rm -rf /research/*
+
+RUN pip --no-cache-dir install jupyter_contrib_nbextensions && \
+  jupyter contrib nbextension install --system && \
+  pip --no-cache-dir install jupyter_nbextensions_configurator && \
+  jupyter nbextensions_configurator enable --system
+
+COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+WORKDIR /notebooks
+
+EXPOSE 8888
+
+CMD ["/run_jupyter.sh","--allow-root"]
