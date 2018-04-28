@@ -27,7 +27,7 @@ RUN git clone https://github.com/cocodataset/cocoapi.git && \
 #
 #COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 #COPY jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
-#WORKDIR /notebooks
+WORKDIR /notebooks
 #VOLUME ["/notebooks"]
 #
 #EXPOSE 8888
