@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:nightly
+FROM kuberlab/tensorflow:cpu-27-1.7.0-base
 
 RUN apt-get update && apt-get install -y \
   git \
@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   python-lxml \
   python-tk \
   build-essential && \
-  pip install jupyter matplotlib pillow lxml cython
+  pip install pillow lxml cython
 
 COPY ./research /research
 WORKDIR /research
@@ -20,14 +20,16 @@ RUN git clone https://github.com/cocodataset/cocoapi.git && \
  pip install dist/* && pip install slim/dist/* && \
  rm -rf /research/*
 
-RUN pip --no-cache-dir install jupyter_contrib_nbextensions && \
-  jupyter contrib nbextension install --system && \
-  pip --no-cache-dir install jupyter_nbextensions_configurator && \
-  jupyter nbextensions_configurator enable --system
-
-COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
-WORKDIR /notebooks
-
-EXPOSE 8888
-
-CMD ["/run_jupyter.sh","--allow-root"]
+#RUN pip --no-cache-dir install jupyter_contrib_nbextensions && \
+#  jupyter contrib nbextension install --system && \
+#  pip --no-cache-dir install jupyter_nbextensions_configurator && \
+#  jupyter nbextensions_configurator enable --system
+#
+#COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+#COPY jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+#WORKDIR /notebooks
+#VOLUME ["/notebooks"]
+#
+#EXPOSE 8888
+#
+#CMD ["/run_jupyter.sh","--allow-root"]
