@@ -1,4 +1,4 @@
-FROM kuberlab/tensorflow:cpu-27-1.7.0-base
+FROM kuberlab/tensorflow:cpu-36-1.9.0-base
 
 RUN apt-get update && apt-get install -y \
   git \
