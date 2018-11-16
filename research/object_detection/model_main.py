@@ -59,7 +59,11 @@ FLAGS = flags.FLAGS
 def main(unused_argv):
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
-  config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir)
+  config = tf.estimator.RunConfig(
+      model_dir=FLAGS.model_dir,
+      log_step_count_steps=5,
+  )
+  tf.logging.set_verbosity(tf.logging.INFO)
 
   train_and_eval_dict = model_lib.create_estimator_and_inputs(
       run_config=config,
@@ -102,6 +106,7 @@ def main(unused_argv):
         eval_on_train_data=False)
 
     # Currently only a single Eval Spec is allowed.
+    # __import__('ipdb').set_trace()
     tf.estimator.train_and_evaluate(estimator, train_spec, eval_specs[0])
 
 
