@@ -15,7 +15,9 @@ COPY ./research /research
 
 RUN cd /research && git clone https://github.com/cocodataset/cocoapi.git && \
  cd cocoapi/PythonAPI && make && \
- cp -r pycocotools /research/ && cd /research && \
+ cp -r pycocotools /research/ && \
+ site_dir=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") && \
+ cp -r pycocotools $site_dir/ && cd /research && \
  protoc object_detection/protos/*.proto --python_out=. && \
 # Do not install code into container, only "slim" package
 # python setup.py sdist && \
