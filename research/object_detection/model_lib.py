@@ -139,7 +139,7 @@ def unstack_batch(tensor_dict, unpad_groundtruth_tensors=True):
         unbatched_tensor_dict):
       raise ValueError('`num_groundtruth_boxes` not found in tensor_dict. '
                        'Keys available: {}'.format(
-                           unbatched_tensor_dict.keys()))
+                           list(unbatched_tensor_dict.keys())))
     unbatched_unpadded_tensor_dict = {}
     unpad_keys = set([
         # List of input data fields that are padded along the num_boxes
@@ -415,7 +415,7 @@ def create_model_fn(detection_model_fn, configs, hparams, use_tpu=False):
 
       # Eval metrics on a single example.
       eval_metric_ops = eval_util.get_eval_metric_ops_for_evaluators(
-          eval_config, category_index.values(), eval_dict)
+          eval_config, list(category_index.values()), eval_dict)
       for loss_key, loss_tensor in iter(losses_dict.items()):
         eval_metric_ops[loss_key] = tf.metrics.mean(loss_tensor)
       for var in optimizer_summary_vars:
