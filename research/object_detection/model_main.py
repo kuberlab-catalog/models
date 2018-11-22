@@ -84,9 +84,9 @@ def main(unused_argv):
   predict_input_fn = train_and_eval_dict['predict_input_fn']
   train_steps = train_and_eval_dict['train_steps']
 
-  if FLAGS.train_only:
+  if FLAGS.only_train:
       estimator.train(train_input_fn, max_steps=train_steps)
-  elif FLAGS.eval_only:
+  elif FLAGS.only_eval:
       model_lib.continuous_eval(estimator, FLAGS.checkpoint_dir, eval_input_fns[0], train_steps, 'validation_data')
   else:
 
