@@ -25,6 +25,8 @@ import tensorflow as tf
 from object_detection import model_hparams
 from object_detection import model_lib
 
+from mlboardclient.api import client
+
 flags.DEFINE_string(
     'model_dir', None, 'Path to output model directory '
     'where event and checkpoint files will be written.')
@@ -61,6 +63,20 @@ FLAGS = flags.FLAGS
 
 
 def main(unused_argv):
+
+  use_mlboard = False
+  mlboard = None
+  if client:
+    mlboard = client.Client()
+    try:
+      mlboard.apps.get()
+    except Exception:
+      mlboard = None
+      print('Do not use mlboard.')
+    else:
+      print('Use mlboard parameters logging.')
+      use_mlboard = True
+
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
   config = tf.estimator.RunConfig(
@@ -117,8 +133,13 @@ def main(unused_argv):
 
         # Currently only a single Eval Spec is allowed.
         # __import__('ipdb').set_trace()
-        tf.estimator.train_and_evaluate(estimator, train_spec, eval_specs[0])
+        result, _ = tf.estimator.train_and_evaluate(estimator, train_spec, eval_specs[0])
+        update_data({'train_checkpoint': result['global_step']}, use_mlboard, mlboard)
 
+
+def update_data(data, use_mlboard, mlboard):
+  if use_mlboard and mlboard:
+    mlboard.update_task_info(data)
 
 if __name__ == '__main__':
   tf.app.run()
