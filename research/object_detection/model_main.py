@@ -80,8 +80,6 @@ def main(unused_argv):
   else:
     print('no mlboard client.')
 
-  update_data({'train_test': 'test_val'}, use_mlboard, mlboard)
-
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
   config = tf.estimator.RunConfig(
@@ -139,8 +137,6 @@ def main(unused_argv):
         # Currently only a single Eval Spec is allowed.
         # __import__('ipdb').set_trace()
         result, _ = tf.estimator.train_and_evaluate(estimator, train_spec, eval_specs[0])
-        print(result)
-        print(type(result['global_step']))
         update_data({'train_checkpoint': str(result['global_step'])}, use_mlboard, mlboard)
 
 
