@@ -66,6 +66,7 @@ def main(unused_argv):
 
   use_mlboard = False
   mlboard = None
+  print('check mlboard client...')
   if client:
     mlboard = client.Client()
     try:
@@ -76,6 +77,8 @@ def main(unused_argv):
     else:
       print('Use mlboard parameters logging.')
       use_mlboard = True
+  else:
+    print('no mlboard client.')
 
   update_data({'train_test': 'test_val'}, use_mlboard, mlboard)
 
