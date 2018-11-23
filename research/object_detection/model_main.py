@@ -139,7 +139,9 @@ def main(unused_argv):
         # Currently only a single Eval Spec is allowed.
         # __import__('ipdb').set_trace()
         result, _ = tf.estimator.train_and_evaluate(estimator, train_spec, eval_specs[0])
-        update_data({'train_checkpoint': result['global_step']}, use_mlboard, mlboard)
+        print(result)
+        print(type(result['global_step']))
+        update_data({'train_checkpoint': str(result['global_step'])}, use_mlboard, mlboard)
 
 
 def update_data(data, use_mlboard, mlboard):
