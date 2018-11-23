@@ -77,6 +77,8 @@ def main(unused_argv):
       print('Use mlboard parameters logging.')
       use_mlboard = True
 
+  update_data({'train_test': 'test_val'}, use_mlboard, mlboard)
+
   flags.mark_flag_as_required('model_dir')
   flags.mark_flag_as_required('pipeline_config_path')
   config = tf.estimator.RunConfig(
